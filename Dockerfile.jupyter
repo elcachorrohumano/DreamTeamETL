@@ -1,0 +1,20 @@
+# Dockerfile para Jupyter
+FROM python:3.8-slim
+
+# Copiar solo los archivos .ipynb
+COPY *.ipynb /app/
+
+WORKDIR /app
+
+# Instalar Jupyter Lab
+RUN pip install --no-cache-dir jupyterlab
+
+# Instalar dependencias desde requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Exponer puerto para Jupyter Lab
+EXPOSE 8888
+
+# Comando para iniciar Jupyter Lab
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--LabApp.token=''"]
